@@ -60,3 +60,30 @@ def get_size(path: Path)-> str:
     size_in_kb=round(os.path.getsize(path)/1024)
     return f"~ {size_in_kb} KB"                
     
+
+@ensure_annotations
+def save_json(path: Path,data: dict):
+    """Save JSON data
+    
+    Args:
+    path(Path): path to json file
+    data(dict): data to be saved in json file
+    """
+    with open(path,"w") as f:
+        json.dump(data,f,indent=4)
+
+    logger.info(f"json file saved at: {path}")    
+
+
+
+
+def decodeImage(imgstring, fileName):
+    imgdata = base64.b64decode(imgstring)
+    with open(fileName, 'wb') as f:
+        f.write(imgdata)
+        f.close()
+
+
+def encodeImageIntoBase64(croppedImagePath):
+    with open(croppedImagePath, "rb") as f:
+        return base64.b64encode(f.read())
